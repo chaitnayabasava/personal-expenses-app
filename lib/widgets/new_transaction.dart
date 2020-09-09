@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+// Reason for using this as a stateFull widget will be discussed later.
+class NewTransaction extends StatefulWidget {
   final Function newTrHandler;
 
   NewTransaction(this.newTrHandler);
+
+  @override
+  _NewTransactionState createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
 
   void _submitTransaction() {
     final title = titleController.text;
@@ -17,10 +24,12 @@ class NewTransaction extends StatelessWidget {
     }
 
     if (title.isEmpty || amount <= 0) return;
-    newTrHandler(
+    widget.newTrHandler(
       title,
       amount,
     );
+
+    Navigator.of(context).pop();
   }
 
   @override
