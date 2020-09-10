@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import './chat_bar.dart';
 import '../models/transaction.dart';
 
 class Chart extends StatelessWidget {
@@ -24,18 +25,38 @@ class Chart extends StatelessWidget {
         }
       });
       return {
-        'day': DateFormat.E(weekDay),
+        'day': DateFormat.E().format(weekDay).substring(0, 1),
         'amount': totalAmount,
       };
     });
+  }
+
+  double get maxAmount {
+    return groupedTransactions.fold(
+      0,
+      (previousValue, element) => previousValue + element['amount'],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.all(20),
-      child: Row(
-        children: [],
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: groupedTransactions.map((tr) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                tr['day'],
+                tr['amount'],
+                maxAmount == 0 ? 0.0 : (tr['amount'] as double) / maxAmount,
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
