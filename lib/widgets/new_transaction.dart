@@ -47,56 +47,63 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            TextField(
-              controller: _titleController,
-              onSubmitted: (_) => this._submitTransaction(),
-              decoration: InputDecoration(
-                labelText: 'Title',
+    return SingleChildScrollView(
+      child: Card(
+        child: Container(
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextField(
+                controller: _titleController,
+                onSubmitted: (_) => this._submitTransaction(),
+                decoration: InputDecoration(
+                  labelText: 'Title',
+                ),
               ),
-            ),
-            TextField(
-              controller: _amountController,
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => this._submitTransaction(),
-              decoration: InputDecoration(
-                labelText: 'Amount',
+              TextField(
+                controller: _amountController,
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => this._submitTransaction(),
+                decoration: InputDecoration(
+                  labelText: 'Amount',
+                ),
               ),
-            ),
-            Container(
-              height: 70,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      _pickedDate == null
-                          ? 'No date choosen!!!'
-                          : DateFormat.yMd().format(_pickedDate),
+              Container(
+                height: 70,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        _pickedDate == null
+                            ? 'No date choosen!!!'
+                            : DateFormat.yMd().format(_pickedDate),
+                      ),
                     ),
-                  ),
-                  FlatButton(
-                    textColor: Theme.of(context).primaryColor,
-                    onPressed: _showDatepicker,
-                    child: Text(
-                      'choose date',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  )
-                ],
+                    FlatButton(
+                      textColor: Theme.of(context).primaryColor,
+                      onPressed: _showDatepicker,
+                      child: Text(
+                        'choose date',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-            RaisedButton(
-              onPressed: this._submitTransaction,
-              color: Theme.of(context).primaryColor,
-              textColor: Theme.of(context).buttonColor,
-              child: Text('Add Transaction'),
-            )
-          ],
+              RaisedButton(
+                onPressed: this._submitTransaction,
+                color: Theme.of(context).primaryColor,
+                textColor: Theme.of(context).buttonColor,
+                child: Text('Add Transaction'),
+              )
+            ],
+          ),
         ),
       ),
     );
